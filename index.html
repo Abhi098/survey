@@ -165,7 +165,8 @@
         // Add your BOT ID below 
         var BOT_ID ="6a9f2f3b-af94-4019-b64d-1bdabc6f820d"; 
         var theURL = "https://powerva.microsoft.com/api/botmanagement/v1/directline/directlinetoken?botId=" + BOT_ID;
-		
+	let params1 = (new URL(document.location)).searchParams;
+    	let name = params1.get("surveyid")	
         // Triggers bot with initial message, in order to have greeting message render on load.
         const store = WebChat.createStore({}, ({ dispatch }) => next => action => {
           const { type } = action;
@@ -184,7 +185,7 @@
               payload: {
                 name: "pvaSetContext",
                 value: {
-                  surveyid: surveyIDParam,
+                  surveyid: name,
                 },
               },
             });
