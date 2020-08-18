@@ -171,7 +171,7 @@
           const { type } = action;
 	//Start				
           if (action.type === "DIRECT_LINE/CONNECT_FULFILLED") {
-             new Promise(function (resolve) {
+             return new Promise(function (resolve) {
     		dispatch({
 			type: 'WEB_CHAT/SEND_EVENT',
 			payload: {
