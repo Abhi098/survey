@@ -169,29 +169,39 @@
         // Triggers bot with initial message, in order to have greeting message render on load.
         const store = WebChat.createStore({}, ({ dispatch }) => next => action => {
           const { type } = action;
+	//Start				
           if (action.type === "DIRECT_LINE/CONNECT_FULFILLED") {
-              dispatch({
-              type: "WEB_CHAT/SEND_EVENT",
-              payload: {
-                name: "startConversation",
-                type: "event",
-              },
-            });
-          }
-          if (action.type === "DIRECT_LINE/CONNECT_FULFILLED") {
-            dispatch({
-              type: "WEB_CHAT/SEND_EVENT",
-              payload: {
-                name: "pvaSetContext",
-                value: {
-                  surveyid:name,
-                },
-              },
-            });
+             new Promise(function (resolve) {
+    		dispatch({
+			type: 'WEB_CHAT/SEND_EVENT',
+			payload: {
+			    name: 'pvaSetContext',
+			    value: {surveyid:name}
+			}
+		    })
+    		setTimeout(() => resolve(1), 1000);
+		}).then(function (result) {
+		    dispatch({
+			meta: {
+			    method: "keyboard"
+			},
+			payload: {
+			    activity: {
+				channelData: {
+				    postBack: true
+				},
+				name: "startConversation",
+				type: "event"
+			    },
+			},
+			type: "DIRECT_LINE/POST_ACTIVITY"
+		    });
+		});
           }
           return next(action);
         });		
-
+				
+//end
       fetch(theURL)
             .then(response => response.json())
             .then(conversationInfo => {
