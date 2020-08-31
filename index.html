@@ -171,6 +171,7 @@
           const { type } = action;
 	//Start				
           if (action.type === "DIRECT_LINE/CONNECT_FULFILLED") {
+	console.log("before return"+name)
              return new Promise(function (resolve) {
     		dispatch({
 			type: 'WEB_CHAT/SEND_EVENT',
@@ -198,6 +199,7 @@
 		    });
 		});
           }
+	
           return next(action);
         });		
 				
