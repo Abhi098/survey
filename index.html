@@ -167,8 +167,6 @@
     	let name = params1.get("surveyid")	
 	console.log("Name",name)			
         // Triggers bot with initial message, in order to have greeting message render on load.
-        
-        return new Promise(function (resolve) {
         const store = WebChat.createStore({}, ({ dispatch }) => next => action => {
           const { type } = action;
 	//Start				
@@ -204,7 +202,7 @@
 	
           return next(action);
         });		
-        }).then(function (result)	{	
+				
 //end
       fetch(theURL)
             .then(response => response.json())
@@ -223,7 +221,7 @@
             })
             .catch(err => console.error("An error occurred: " + err));
      
-        });
+
     </script>
 	
 	
