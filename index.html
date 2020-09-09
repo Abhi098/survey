@@ -182,6 +182,7 @@
 			    value: {surveyid:name}
 			}
 		    })
+		console.log("1")		
     		setTimeout(() => resolve(1), 1000);
 		}).then(function (result) {
 		    dispatch({
@@ -201,7 +202,7 @@
 		    });
 		});
           }
-		
+	console.log("2")	
           return next(action);
         });		
 				
@@ -210,6 +211,7 @@
       fetch(theURL)
             .then(response => response.json())
             .then(conversationInfo => {
+		console.log("3")		
                 window.WebChat.renderWebChat(
                     {
                         directLine: window.WebChat.createDirectLine({
@@ -219,6 +221,7 @@
 			store:store,
                         styleOptions:styleOptions
                     },
+				
                     document.getElementById('webchat')
                 );
             })
