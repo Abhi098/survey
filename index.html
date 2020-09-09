@@ -200,9 +200,10 @@
 			},
 			type: "DIRECT_LINE/POST_ACTIVITY"
 		    });
+		console.log("2")
 		});
           }
-	console.log("2")	
+	console.log("3")	
           return next(action);
         });		
 				
@@ -211,7 +212,7 @@
       fetch(theURL)
             .then(response => response.json())
             .then(conversationInfo => {
-		console.log("3")		
+		console.log("4")		
                 window.WebChat.renderWebChat(
                     {
                         directLine: window.WebChat.createDirectLine({
