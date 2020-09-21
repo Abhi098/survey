@@ -132,7 +132,7 @@
 
   <script>
         const styleOptions = {
-		botAvatarImage: 'https://askhr.test.slb.com/pva/Kal.png', 
+		botAvatarImage: 'https://logodix.com/logo/1955098.png', 
 		backgroundColor: '#FAF9F8',
 		suggestedActionBackground: 'White',
         bubbleBackground: 'rgba(255, 200, 200, 0.2)',
@@ -161,73 +161,50 @@
         };
       
         // Add your BOT ID below 
-        var BOT_ID ="6a9f2f3b-af94-4019-b64d-1bdabc6f820d"; 
+        var BOT_ID ="73a3376b-3f22-4c94-affe-36a48c602da3"; 
         var theURL = "https://powerva.microsoft.com/api/botmanagement/v1/directline/directlinetoken?botId=" + BOT_ID;
-	let params1 = (new URL(document.location)).searchParams;
-    	let name = params1.get("surveyid")	
-	console.log("Name",name)	
+		
 				
         // Triggers bot with initial message, in order to have greeting message render on load.
-        const store = WebChat.createStore({}, ({ dispatch }) => next => action => {
-          const { type } = action;
-	//Start				
-          if (action.type === "DIRECT_LINE/CONNECT_FULFILLED") {
-	console.log("before return"+name);
-		
-             return new Promise(function (resolve) {
-    		dispatch({
-			type: 'WEB_CHAT/SEND_EVENT',
-			payload: {
-			    name: 'pvaSetContext',
-			    value: {surveyid:name}
-			}
-		    })
-		console.log("1")		
-    		setTimeout(() => resolve(1), 1000);
-		}).then(function (result) {
-		    dispatch({
-			meta: {
-			    method: "keyboard"
-			},
-			payload: {
-			    activity: {
-				channelData: {
-				    postBack: true
-				},
-				name: "startConversation",
-				type: "event"
-			    },
-			},
-			type: "DIRECT_LINE/POST_ACTIVITY"
-		    });
-		console.log("2")
-		});
-          }
-	console.log("3")	
-          return next(action);
-        });		
-				
-//end
-	
-      fetch(theURL)
-            .then(response => response.json())
-            .then(conversationInfo => {
-		console.log("4")		
-                window.WebChat.renderWebChat(
-                    {
-                        directLine: window.WebChat.createDirectLine({
-                            token: conversationInfo.token,
-                            
-                        }),
-			store:store,
-                        styleOptions:styleOptions
-                    },
-				
-                    document.getElementById('webchat')
-                );
-            })
-            .catch(err => console.error("An error occurred: " + err));
-     
+                    const store = window.WebChat.createStore(
+               {},
+               ({ dispatch }) => next => action => {
+                   if (action.type === "DIRECT_LINE/CONNECT_FULFILLED") {
+                      dispatch({
+                          meta: {
+                               method: "keyboard",
+                           },
+                           payload: {
+                               activity: {
+                                     channelData: {
+                                          postBack: true,
+                                     },
+                                      //Web Chat will show the 'Greeting' System Topic message which has a trigger-phrase 'hello'
+                                      name: 'startConversation',
+                                      type: "event"
+                                 },
+                            },
+                            type: "DIRECT_LINE/POST_ACTIVITY",
+                       });
+                 }
+                 return next(action);
+              }
+           );
+           fetch(theURL)
+                .then(response => response.json())
+                .then(conversationInfo => {
+                    window.WebChat.renderWebChat(
+                        {
+                            directLine: window.WebChat.createDirectLine({
+                                token: conversationInfo.token,
+                            }),
+                            store: store,
+                            styleOptions: styleOptions
+                        },
+                        document.getElementById('webchat')
+                    );
+                })
+                .catch(err => console.error("An error occurred: " + err));     
 
     </script>
 	
